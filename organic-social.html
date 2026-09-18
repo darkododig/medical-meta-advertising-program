@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Organic Social Media Management — Medical Practice Marketing | Wisevu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #6366f1; --accent-dark: #4f46e5; --accent-light: #eef2ff;
+      --accent-mid: #a5b4fc; --navy: #0f1e2d; --navy-mid: #1a2e42;
+      --gray-bg: #f1f5f9; --gray-line: #dde5ef; --text: #1a2535;
+      --text-soft: #4a5f78; --text-muted: #7a94b0; --white: #ffffff;
+      --gradient: linear-gradient(135deg, #6366f1, #a5b4fc); --border: #e5e7eb;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* Topbar */
+    .topbar { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    .topbar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .topbar-logo img { height: 28px; display: block; }
+    .program-nav { display: flex; gap: 4px; align-items: center; }
+    .program-nav a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px; border-radius: 6px; color: rgba(255,255,255,0.45); transition: all 0.18s; border: 1px solid transparent; }
+    .program-nav a:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+    .program-nav a.active { color: #fff; background: var(--accent); border-color: var(--accent-dark); }
+
+    /* Hero */
+    .hero { background: linear-gradient(160deg, #0a1628 0%, #0d2347 45%, #1a3d6e 100%); color: #fff; padding: 80px 32px 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+    #neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); color: #a5b4fc; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 6px; height: 6px; background: #a5b4fc; border-radius: 50%; }
+    .hero h1 { font-size: clamp(45px, 8vw, 81px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.92; margin-bottom: 18px; color: #fff; }
+    .hero h1 .program-name { background: linear-gradient(135deg, #6366f1, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .intensity-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11); border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 28px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); letter-spacing: 0.08em; text-transform: uppercase; }
+    .intensity-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; flex-shrink: 0; box-shadow: 0 0 6px rgba(110,231,183,0.5); }
+    .hero-desc { max-width: 580px; margin: 0 auto 44px; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); font-weight: 400; }
+    .price-block { display: inline-flex; flex-direction: column; align-items: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px 52px; backdrop-filter: blur(12px); }
+    .price-amount { font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: #fff; }
+    .price-currency { font-size: 24px; font-weight: 600; vertical-align: top; line-height: 1.5; color: rgba(255,255,255,0.65); }
+    .price-period { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 10px; letter-spacing: 0.06em; }
+    .price-sub { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 6px; letter-spacing: 0.04em; }
+
+    /* Addon cards */
+    .addons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .addon-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 24px 20px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.18s, border-color 0.18s; }
+    .addon-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .addon-card-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .addon-card-name { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .addon-card-price { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .addon-card-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 2px; }
+
+    /* Main */
+    main { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--gray-line); }
+    .section-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); max-width: 780px; margin-top: -14px; margin-bottom: 32px; font-style: italic; }
+
+    /* Card grid */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.18s, border-color 0.18s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); flex-shrink: 0; }
+    .card-icon svg { width: 22px; height: 22px; color: #6366f1; }
+    .info-btn { background: none; border: 1px solid var(--gray-line); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
+    .info-btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .info-btn svg { width: 14px; height: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .card-qty { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); width: fit-content; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,22,40,0.72); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal-card { background: var(--white); border-radius: 20px; padding: 36px; max-width: 540px; width: 100%; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,0.28); animation: modalIn 0.2s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-bg); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+    .modal-close:hover { background: var(--gray-line); color: var(--text); }
+    .modal-close svg { width: 16px; height: 16px; }
+    .modal-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); margin-bottom: 14px; }
+    .modal-icon svg { width: 24px; height: 24px; color: #6366f1; }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 6px; line-height: 1.3; padding-right: 32px; }
+    .modal-qty { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); margin-bottom: 20px; width: fit-content; }
+    .modal-divider { height: 1px; background: var(--gray-line); margin-bottom: 20px; }
+    .modal-desc { font-size: 13.5px; line-height: 1.8; color: var(--text-soft); }
+    .modal-desc p { margin-bottom: 12px; }
+    .modal-desc p:last-child { margin-bottom: 0; }
+    .modal-desc strong { color: var(--text); font-weight: 600; }
+    .modal-desc em { font-style: italic; color: var(--text-muted); }
+    .modal-desc ul { margin: 6px 0 14px 18px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* Notes */
+    .notes { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 24px 28px; }
+    .notes-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .notes p { font-size: 14px; line-height: 1.75; color: var(--text-soft); margin-bottom: 12px; }
+    .notes p:last-child { margin-bottom: 0; }
+    .notes strong { color: var(--text); font-weight: 600; }
+
+    /* Footer */
+    footer { background: #f1f5f9; text-align: center; padding: 24px; font-size: 12px; color: var(--text-muted); }
+    footer a { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+
+
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .addons-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) {
+      .topbar-inner { padding: 0 20px; } .hero { padding: 60px 20px 52px; }
+      .program-nav { display: none; } .grid { grid-template-columns: 1fr; }
+      .addons-grid { grid-template-columns: 1fr; }
+      main { padding: 40px 20px 60px; } .modal-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-logo" href="https://www.wisevu.com">
+      <img src="https://www.wisevu.com/wp-content/uploads/2020/10/wisevu-web-design-and-seo-light.svg" alt="Wisevu" />
+    </a>
+    <div class="program-nav">
+      <a href="meta-ads.html">Meta Ads</a>
+      <a href="organic-social.html" class="active">Organic Social</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <canvas id="neural-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Organic Social Media &mdash; Meta Ads Add-On</div>
+    <h1><span class="program-name">Organic Social</span></h1>
+    <div class="intensity-badge"><span class="intensity-dot"></span>Requires Active Meta Ads Program</div>
+    <p class="hero-desc">Build a consistent, professional brand presence on Facebook and Instagram with custom-branded posts crafted by medical marketing specialists. Every piece of content is HIPAA-reviewed, on-brand, and designed to educate patients, reinforce your expertise, and keep your practice top of mind between campaigns.</p>
+    <div class="price-block">
+      <div class="price-amount"><span class="price-currency">$</span>499</div>
+      <div class="price-period">CAD &nbsp;/&nbsp; month &nbsp;/&nbsp; practice</div>
+      <div class="price-sub">$350 one-time setup &nbsp;&middot;&nbsp; Facebook &amp; Instagram included</div>
+    </div>
+  </div>
+</section>
+
+<main>
+  <p class="section-label">What's Included</p>
+  <h2 class="section-title">Monthly Deliverables</h2>
+  <div class="grid">
+
+    <!-- Card 1: Strategy -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card1')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Social Strategy &amp; Content Planning</div>
+      <div class="card-qty">Monthly</div>
+    </div>
+
+    <!-- Card 2: Static Posts -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card2')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Custom Branded Static Posts</div>
+      <div class="card-qty">x2 posts / month</div>
+    </div>
+
+    <!-- Card 4: HIPAA Compliance -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card4')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Healthcare Content &amp; Compliance Review</div>
+      <div class="card-qty">Every post</div>
+    </div>
+
+    <!-- Card 5: AI Community Management -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card5')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">AI-Assisted Comment &amp; DM Management</div>
+      <div class="card-qty">Included</div>
+    </div>
+
+    <!-- Card 6: Dedicated Account Manager -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card6')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Dedicated Account Manager</div>
+      <div class="card-qty">Personal point of contact</div>
+    </div>
+
+    <!-- Card 7: Monthly Report -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card7')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Monthly Performance Report</div>
+      <div class="card-qty">x1 report</div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Expand Your Program</p>
+  <h2 class="section-title">Optional Add-Ons</h2>
+  <p class="section-desc">Start with the base program and add what your practice needs. Each module is a monthly add-on that stacks cleanly onto your core deliverables.</p>
+  <div class="addons-grid">
+
+    <div class="addon-card">
+      <div class="addon-card-label">Monthly Add-On</div>
+      <div class="addon-card-name">Additional Static Post</div>
+      <div class="addon-card-price">+$99 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
+      <div class="addon-card-note">Add one more custom-branded static post per month. Same production quality, copywriting, and HIPAA review as your base posts.</div>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-card-label">Monthly Add-On</div>
+      <div class="addon-card-name">Short-Form Social Video</div>
+      <div class="addon-card-price">+$199 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
+      <div class="addon-card-note">One short-form video per month (15–45 sec) using AI avatars, AI voiceovers, motion graphics, scripted copy, and branded design. HIPAA-reviewed and optimized for Facebook and Instagram Reels.</div>
+    </div>
+
+    <div class="addon-card">
+      <div class="addon-card-label">Monthly Add-On</div>
+      <div class="addon-card-name">Additional Platform</div>
+      <div class="addon-card-price">+$49 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
+      <div class="addon-card-note">Extend your existing monthly content to an additional platform such as Google Business Profile, LinkedIn, or TikTok, with platform-appropriate formatting and publishing. Per platform, per month.</div>
+    </div>
+
+  </div>
+
+  <div class="notes">
+    <p class="notes-label">Program Notes</p>
+    <p><strong>Add-On Requirement:</strong> This program is available exclusively to practices actively enrolled in Wisevu's Meta Ads Management program. Cancellation of Meta Ads automatically cancels this add-on.</p>
+    <p><strong>Pricing:</strong> $499 CAD/month per practice, all-inclusive. A one-time <strong>$350 CAD setup fee</strong> covers AI onboarding, community management configuration, and scheduling setup.</p>
+    <p><strong>Strategy &amp; Reporting:</strong> Content strategy and monthly performance review are covered in your existing Meta Ads monthly call. No separate strategy call is required for this program.</p>
+    <p><strong>Platforms:</strong> Facebook and Instagram are included in the base program. Your existing monthly content can be extended to additional platforms (e.g. Google Business Profile, LinkedIn, TikTok) with platform-appropriate formatting and publishing at <strong>+$49 CAD/month per platform</strong>. This covers distribution and adaptation of your existing content, not a separate content strategy for that platform.</p>
+    <p><strong>Content Calendar Delivery:</strong> Your content calendar is delivered on the <strong>15th of each month</strong> for the following month, giving you time to review and approve before anything goes live.</p>
+    <p><strong>Asset &amp; Request Submissions:</strong> Please submit any photos, clinic assets, or content requests by the <strong>10th of each month</strong>. Original photos and content from your practice are encouraged whenever available, helping create a more authentic and distinctive social presence.</p>
+    <p><strong>AI Community Management:</strong> Comment and DM responses are handled by an AI trained on your practice's voice, services, and FAQs. Clinical questions and anything requiring a medical response are always flagged to your team.</p>
+    <p><strong>Multi-Location Pricing:</strong> Each practice location is billed as a separate program, unless content is identical across locations — in which case discounts may apply.</p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Wisevu &nbsp;&middot;&nbsp; <a href="https://www.wisevu.com">wisevu.com</a></p>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-qty" id="modal-qty"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+  </div>
+</div>
+
+<script>
+var popupData = {
+  card1: {
+    title: "Social Strategy & Content Planning",
+    qty: "Monthly",
+    desc: '<p>Each month, we develop a content strategy tailored to your practice, specialty, and patient audience. We identify the right content themes — patient education, service spotlights, seasonal health awareness, trust-building posts — and plan them into a structured calendar before a single word is written or graphic is designed.</p><p>Every content decision is grounded in what works for medical practices specifically: what builds patient trust, what drives appointment bookings, and what keeps your practice top of mind without crossing into overpromising or unverified health claims.</p><p>Strategy is the foundation of everything we produce. Without it, content is just noise.</p>'
+  },
+  card2: {
+    title: "Custom Branded Static Posts",
+    qty: "x2 posts / month",
+    desc: "<p>Two custom-designed graphic posts per month, each built from scratch to reflect your practice's brand identity — your colours, fonts, tone, and visual style. We don't use generic medical stock templates. Every post is intentional, on-brand, and crafted to stand out in a healthcare feed.</p><p>Each post includes professional copywriting tailored for patient audiences: clear, educational, and free of unverified clinical claims. Captions are written for both platforms and include a relevant call to action.</p><p><em>If your practice has existing photos, team headshots, or clinic imagery, we encourage you to share them. Original photos and content from your practice are encouraged whenever available, helping create a more authentic and distinctive social presence.</em></p>"
+  },
+  card4: {
+    title: "Healthcare Content & Compliance Review",
+    qty: "Every post",
+    desc: "<p>Every piece of content is reviewed by a trained member of our team before it is scheduled or published. This is one of the primary reasons medical practices choose Wisevu over a general social media agency: most content writers don't know what they're not allowed to say in a regulated healthcare environment.</p><p>The review covers four areas:</p><p><strong>Privacy and HIPAA.</strong> No patient protected health information (PHI) — no identifiable details, case specifics, or anything that links a post to a specific patient. Content must not disclose, reference, or imply any patient information, even incidentally.</p><p><strong>Testimonials and patient stories.</strong> Patient testimonials, photos, and case stories require documented written authorization before being used in any content. Before/after imagery requires explicit patient consent and must meet platform and regulatory standards for presentation.</p><p><strong>Medical claims and advertising standards.</strong> No unverified outcome guarantees — language like \"cures\", \"eliminates\", or \"guaranteed results\" is not permitted. Content must not cross into medical advice or diagnosis, and all service descriptions must be accurate and specialty-appropriate. FTC disclosure requirements apply to any promotional or sponsored content.</p><p><strong>Platform policies.</strong> Meta maintains its own advertising and content guidelines for health-related pages and posts. We review organic content against these standards as well, since platform violations can affect reach, account standing, and ad eligibility.</p><p><em>This is a human review against a defined compliance checklist — not a software scan. Every post is checked before it reaches your audience.</em></p>"
+  },
+  card5: {
+    title: "AI-Assisted Comment & DM Management",
+    qty: "Included",
+    desc: "<p>Comment and DM responses across Facebook and Instagram are handled by an AI trained on your practice's specific voice, services, and frequently asked questions. It handles routine engagement automatically — appointment inquiries, service questions, general responses — so your online presence stays active without your team monitoring social media around the clock.</p><p>Setup requires a one-time onboarding step where you provide your AI training responses: a set of FAQs, your preferred tone, and any topics that should always be escalated to your staff. We handle the configuration from there.</p><p><strong>Important:</strong> The AI is trained to recognise clinical questions, sensitive topics, and anything requiring a qualified medical response. Those interactions are flagged and routed to your team — the AI never attempts to provide medical advice.</p>"
+  },
+  card6: {
+    title: "Dedicated Account Manager",
+    qty: "Personal point of contact",
+    desc: "<p>You'll have a single, dedicated account manager who knows your practice, your brand, and your goals — someone you can reach directly without navigating a support queue or starting from scratch every time you have a question.</p><p>Your account manager oversees your content calendar, coordinates the production team, and reviews Organic Social performance and upcoming content as part of your existing Meta Ads monthly strategy call. They're your advocate inside Wisevu, making sure your program runs smoothly and your feedback gets actioned fast.</p><p>For medical practices, this matters more than it might seem. Your account manager builds context about your specialty, your patient demographics, and your clinic's voice over time — leading to content that gets sharper and more effective the longer we work together.</p>"
+  },
+  card7: {
+    title: "Monthly Performance Report",
+    qty: "x1 report",
+    desc: "<p>At the end of each month, you receive a clear, plain-language report covering how your content performed across Facebook and Instagram — reach, impressions, engagement rate, follower growth, and video views.</p><p>We don't bury you in vanity metrics or agency jargon. We highlight what worked, what didn't, and what we're carrying into next month's strategy. The goal isn't just to show you numbers — it's to make sure your social presence improves every single month.</p><p>Organic Social performance is reviewed as part of your existing Meta Ads monthly strategy call — no separate meeting is required. This gives you a direct line to your account manager to discuss results, ask questions, and align on upcoming content before the next calendar goes out.</p>"
+  }
+};
+
+function openModal(btn, id) {
+  var data = popupData[id];
+  if (!data) return;
+  var card = btn.closest('.card');
+  document.getElementById('modal-icon').innerHTML = card.querySelector('.card-icon').innerHTML;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-qty').textContent = data.qty;
+  document.getElementById('modal-desc').innerHTML = data.desc;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+/* Neural network canvas — indigo palette */
+(function() {
+  var canvas = document.getElementById('neural-canvas');
+  var ctx = canvas.getContext('2d');
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  var nodes = [], NODE_COUNT = 72, MAX_DIST = 135;
+  function Node() {
+    this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.22; this.vy = (Math.random() - 0.5) * 0.22;
+    this.r = Math.random() * 1.5 + 0.8; this.alpha = Math.random() * 0.4 + 0.25;
+    this.pulse = Math.random() * Math.PI * 2; this.pulseSpeed = 0.01 + Math.random() * 0.015;
+    this.t = Math.random();
+  }
+  Node.prototype.update = function() {
+    this.x += this.vx; this.y += this.vy; this.pulse += this.pulseSpeed;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  };
+  Node.prototype.getColor = function(alpha) {
+    var r = Math.round(99 + this.t * (165 - 99));
+    var g = Math.round(102 + this.t * (180 - 102));
+    var b = Math.round(241 + this.t * (252 - 241));
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  };
+  Node.prototype.draw = function() {
+    var pa = this.alpha + Math.sin(this.pulse) * 0.15;
+    var grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 5);
+    grd.addColorStop(0, this.getColor(pa * 0.35)); grd.addColorStop(1, this.getColor(0));
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r * 5, 0, Math.PI * 2);
+    ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.getColor(pa); ctx.fill();
+  };
+  function init() { nodes = []; for (var i = 0; i < NODE_COUNT; i++) nodes.push(new Node()); }
+
+  /* Cassiopeia constellation */
+  function drawConstellation() {
+    var t = Date.now() / 9000;
+    var cx = canvas.width / 2 + Math.sin(t) * 14;
+    var cy = canvas.height * 0.38 + Math.cos(t * 0.65) * 10;
+    var sc = Math.min(canvas.width * 0.30, canvas.height * 0.56);
+
+    var S = {
+      alpha: { x: -0.36, y: -0.08, r: 1.3, a: 0.48 },
+      beta:  { x: -0.18, y:  0.12, r: 1.1, a: 0.42 },
+      gamma: { x:  0.00, y: -0.04, r: 1.5, a: 0.52 },
+      delta: { x:  0.18, y:  0.14, r: 1.1, a: 0.42 },
+      epsilon:{ x:  0.36, y: -0.06, r: 1.2, a: 0.44 }
+    };
+
+    var lines = [['alpha','beta'],['beta','gamma'],['gamma','delta'],['delta','epsilon']];
+
+    ctx.save();
+    lines.forEach(function(l) {
+      var a = S[l[0]], b = S[l[1]];
+      var ax = cx + a.x * sc, ay = cy + a.y * sc;
+      var bx = cx + b.x * sc, by = cy + b.y * sc;
+      var grad = ctx.createLinearGradient(ax, ay, bx, by);
+      grad.addColorStop(0, 'rgba(99,102,241,' + (a.a * 0.38) + ')');
+      grad.addColorStop(1, 'rgba(165,180,252,' + (b.a * 0.38) + ')');
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+      ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+    });
+
+    Object.keys(S).forEach(function(k) {
+      var s = S[k];
+      var sx = cx + s.x * sc, sy = cy + s.y * sc;
+      var grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, s.r * 5);
+      grd.addColorStop(0, 'rgba(99,102,241,' + (s.a * 0.35) + ')');
+      grd.addColorStop(1, 'rgba(165,180,252,0)');
+      ctx.beginPath(); ctx.arc(sx, sy, s.r * 5, 0, Math.PI * 2);
+      ctx.fillStyle = grd; ctx.fill();
+      ctx.beginPath(); ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(165,180,252,' + s.a + ')'; ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var _t = Date.now() / 9000;
+    var ezx = canvas.width / 2 + Math.sin(_t) * 14, ezy = canvas.height * 0.38 + Math.cos(_t * 0.65) * 10;
+    var ezr = Math.min(canvas.width * 0.30, canvas.height * 0.56) * 0.52;
+    function inZone(x, y) { var dx = x - ezx, dy = y - ezy; return dx*dx + dy*dy < ezr*ezr; }
+    for (var i = 0; i < nodes.length; i++) {
+      if (inZone(nodes[i].x, nodes[i].y)) continue;
+      for (var j = i + 1; j < nodes.length; j++) {
+        if (inZone(nodes[j].x, nodes[j].y)) continue;
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MAX_DIST) {
+          var la = (1 - dist / MAX_DIST) * 0.2;
+          var grad = ctx.createLinearGradient(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+          grad.addColorStop(0, nodes[i].getColor(la)); grad.addColorStop(1, nodes[j].getColor(la));
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(function(n) { n.update(); if (!inZone(n.x, n.y)) n.draw(); });
+    drawConstellation();
+    requestAnimationFrame(animate);
+  }
+  resize(); init(); animate();
+  window.addEventListener('resize', function() { resize(); init(); });
+})();
+</script>
+</body>
+</html>

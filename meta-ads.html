@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta Ads Management — Medical Practice Marketing | Wisevu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #6366f1; --accent-dark: #4f46e5; --accent-light: #eef2ff;
+      --accent-mid: #a5b4fc; --navy: #0f1e2d; --navy-mid: #1a2e42;
+      --gray-bg: #f1f5f9; --gray-line: #dde5ef; --text: #1a2535;
+      --text-soft: #4a5f78; --text-muted: #7a94b0; --white: #ffffff;
+      --gradient: linear-gradient(135deg, #6366f1, #a5b4fc); --border: #e5e7eb;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* Topbar */
+    .topbar { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+    .topbar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .topbar-logo img { height: 28px; display: block; }
+    .program-nav { display: flex; gap: 4px; align-items: center; }
+    .program-nav a { text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 16px; border-radius: 6px; color: rgba(255,255,255,0.45); transition: all 0.18s; border: 1px solid transparent; }
+    .program-nav a:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.07); }
+    .program-nav a.active { color: #fff; background: var(--accent); border-color: var(--accent-dark); }
+
+    /* Hero */
+    .hero { background: linear-gradient(160deg, #0a1628 0%, #0d2347 45%, #1a3d6e 100%); color: #fff; padding: 80px 32px 72px; text-align: center; position: relative; overflow: hidden; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+    #neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.4); color: #a5b4fc; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 6px; height: 6px; background: #a5b4fc; border-radius: 50%; }
+    .tier-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 12px; }
+    .hero h1 { font-size: clamp(45px, 8vw, 81px); font-weight: 900; letter-spacing: -0.03em; line-height: 0.92; margin-bottom: 18px; color: #fff; }
+    .hero h1 .program-name { background: linear-gradient(135deg, #6366f1, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .intensity-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11); border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 28px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); letter-spacing: 0.08em; text-transform: uppercase; }
+    .intensity-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; flex-shrink: 0; box-shadow: 0 0 6px rgba(110,231,183,0.5); }
+    .hero-desc { max-width: 580px; margin: 0 auto 44px; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); font-weight: 400; }
+    .price-block { width: 100%; max-width: 820px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 28px 36px 32px; backdrop-filter: blur(12px); }
+    .price-block-top { display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; }
+    .price-invest-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .price-amount { font-size: 72px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: #fff; }
+    .price-currency { font-size: 32px; font-weight: 600; vertical-align: top; line-height: 1.4; color: rgba(255,255,255,0.55); }
+    .price-period { font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 8px; letter-spacing: 0.08em; }
+    .price-block-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 24px; }
+    .price-details-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .price-detail-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.09); }
+    .price-detail-item:last-child { border-right: none; }
+    .price-detail-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(99,102,241,0.18); display: flex; align-items: center; justify-content: center; }
+    .price-detail-icon svg { width: 20px; height: 20px; color: #a5b4fc; }
+    .price-detail-title { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .price-detail-note { font-size: 11.5px; color: rgba(255,255,255,0.42); line-height: 1.5; }
+    .price-sub { display: none; }
+
+    /* Stats bar */
+    .stats-bar { background: var(--navy-mid); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .stats-bar-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: stretch; }
+    .stat-item { flex: 1; padding: 16px 24px; display: flex; flex-direction: column; gap: 3px; border-right: 1px solid rgba(255,255,255,0.06); }
+    .stat-item:last-child { border-right: none; }
+    .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .stat-value { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -0.01em; }
+    .stat-note { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 1px; }
+
+    /* Main */
+    main { max-width: 1100px; margin: 0 auto; padding: 56px 32px 96px; }
+    .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .section-title { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1.5px solid var(--gray-line); }
+    .section-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); max-width: 780px; margin-top: -14px; margin-bottom: 32px; font-style: italic; }
+
+    /* Card grid */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: box-shadow 0.18s, border-color 0.18s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); flex-shrink: 0; }
+    .card-icon svg { width: 22px; height: 22px; color: #6366f1; }
+    .info-btn { background: none; border: 1px solid var(--gray-line); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; flex-shrink: 0; }
+    .info-btn:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+    .info-btn svg { width: 14px; height: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .card-qty { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.03em; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); width: fit-content; }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,22,40,0.72); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.open { display: flex; }
+    .modal-card { background: var(--white); border-radius: 20px; padding: 36px; max-width: 540px; width: 100%; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,0.28); animation: modalIn 0.2s ease; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: var(--gray-bg); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+    .modal-close:hover { background: var(--gray-line); color: var(--text); }
+    .modal-close svg { width: 16px; height: 16px; }
+    .modal-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(165,180,252,0.12)); margin-bottom: 14px; }
+    .modal-icon svg { width: 24px; height: 24px; color: #6366f1; }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--navy); margin-bottom: 6px; line-height: 1.3; padding-right: 32px; }
+    .modal-qty { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 8px; background-image: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; box-shadow: inset 0 0 0 200px rgba(99,102,241,0.09); margin-bottom: 20px; width: fit-content; }
+    .modal-divider { height: 1px; background: var(--gray-line); margin-bottom: 20px; }
+    .modal-desc { font-size: 13.5px; line-height: 1.8; color: var(--text-soft); }
+    .modal-desc p { margin-bottom: 12px; }
+    .modal-desc p:last-child { margin-bottom: 0; }
+    .modal-desc strong { color: var(--text); font-weight: 600; }
+    .modal-desc em { font-style: italic; color: var(--text-muted); }
+    .modal-desc ul { margin: 6px 0 14px 18px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* Add-ons */
+    .addons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .addon-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 24px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .addon-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .addon-type { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+    .addon-name { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .addon-price { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .addon-note { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 2px; }
+
+    /* Cross-sell */
+    .crosssell-wrap { background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(165,180,252,0.08)); border: 1px solid rgba(99,102,241,0.2); border-radius: 16px; padding: 28px 32px; margin-bottom: 48px; }
+    .crosssell-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .crosssell-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(165,180,252,0.15)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .crosssell-icon svg { width: 22px; height: 22px; color: var(--accent); }
+    .crosssell-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 3px; }
+    .crosssell-title { font-size: 16px; font-weight: 800; color: var(--navy); }
+    .crosssell-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .crosssell-tier { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; transition: box-shadow 0.15s, border-color 0.15s; }
+    .crosssell-tier:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .crosssell-tier-name { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 2px; }
+    .crosssell-intro { font-size: 13px; color: var(--text-soft); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
+    .crosssell-tier-list { list-style: none; padding: 0; margin: 8px 0 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .crosssell-tier-list li { font-size: 12.5px; color: var(--text-soft); line-height: 1.4; padding-left: 18px; position: relative; }
+    .crosssell-tier-list li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-size: 11px; font-weight: 800; top: 1px; }
+    .crosssell-tier-list li strong { color: var(--text); font-weight: 600; }
+    .crosssell-tier { align-items: stretch; }
+    .crosssell-tier-price { font-size: 18px; font-weight: 900; color: var(--navy); letter-spacing: -0.02em; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--gray-line); }
+    .crosssell-tier-price span { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+    @media (max-width: 700px) { .crosssell-tiers { grid-template-columns: 1fr; } }
+    .crosssell-base { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; gap: 20px; flex-wrap: wrap; }
+    .crosssell-base-left { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 200px; }
+    .crosssell-base-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .crosssell-base-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .crosssell-base-includes { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-top: 2px; }
+    .crosssell-base-right { text-align: right; flex-shrink: 0; }
+    .crosssell-base-price { font-size: 30px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; letter-spacing: -0.02em; }
+    .crosssell-base-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .crosssell-base-btn { display: inline-block; margin-top: 12px; padding: 8px 18px; border-radius: 8px; background: var(--gradient); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; }
+    .crosssell-base-btn:hover { opacity: 0.88; }
+    .crosssell-expand-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .crosssell-modules-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .crosssell-module { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+    .crosssell-module-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .crosssell-module-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .crosssell-module-price { font-size: 16px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-top: 2px; }
+    .crosssell-module-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; }
+    @media (max-width: 600px) { .crosssell-modules-row { grid-template-columns: 1fr; } .crosssell-base { flex-direction: column; align-items: flex-start; } .crosssell-base-right { text-align: left; } }
+
+    /* Notes */
+    .notes { background: var(--white); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 24px 28px; }
+    .notes-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .notes p { font-size: 14px; line-height: 1.75; color: var(--text-soft); margin-bottom: 12px; }
+    .notes p:last-child { margin-bottom: 0; }
+    .notes strong { color: var(--text); font-weight: 600; }
+
+    /* How It Works */
+    .hiw-section { margin-bottom: 56px; }
+    .hiw-intro { font-size: 13px; line-height: 1.7; color: var(--text-soft); max-width: 600px; margin-top: -14px; margin-bottom: 36px; font-style: italic; }
+    .hiw-track { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .hiw-track::before { content: ''; position: absolute; top: 22px; left: calc(12.5% + 8px); right: calc(12.5% + 8px); height: 1px; background: linear-gradient(90deg, rgba(99,102,241,0.35), rgba(165,180,252,0.5), rgba(99,102,241,0.35)); z-index: 0; }
+    .hiw-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 16px 0; }
+    .hiw-num-wrap { width: 44px; height: 44px; border-radius: 50%; background: var(--white); border: 1.5px solid rgba(99,102,241,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(99,102,241,0.12); }
+    .hiw-num { font-size: 13px; font-weight: 900; letter-spacing: -0.02em; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hiw-step-title { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 5px; line-height: 1.3; }
+    .hiw-step-sub { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; }
+    .hiw-step-desc { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+    .hiw-cycle { display: flex; align-items: flex-start; gap: 14px; background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(165,180,252,0.07)); border: 1px solid rgba(99,102,241,0.15); border-radius: 14px; padding: 18px 22px; margin-top: 32px; }
+    .hiw-cycle-icon { flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(165,180,252,0.15)); display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+    .hiw-cycle-icon svg { width: 16px; height: 16px; color: var(--accent); }
+    .hiw-cycle-text { display: flex; flex-direction: column; gap: 4px; }
+    .hiw-cycle-heading { font-size: 13px; font-weight: 700; color: var(--navy); }
+    .hiw-cycle-body { font-size: 13px; line-height: 1.7; color: var(--text-soft); }
+
+    /* How It Works — Tablet */
+    @media (max-width: 860px) {
+      .hiw-track { grid-template-columns: repeat(2, 1fr); gap: 32px 0; }
+      .hiw-track::before { display: none; }
+      .hiw-step { padding: 0 20px; }
+      .hiw-step:nth-child(1)::after, .hiw-step:nth-child(2)::after, .hiw-step:nth-child(3)::after { display: none; }
+    }
+
+    /* How It Works — Mobile */
+    @media (max-width: 540px) {
+      .hiw-track { grid-template-columns: 1fr; gap: 0; }
+      .hiw-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 16px; padding: 0 0 28px 0; position: relative; }
+      .hiw-step:not(:last-child)::after { content: ''; position: absolute; left: 21px; top: 44px; bottom: 0; width: 1px; background: rgba(99,102,241,0.25); }
+      .hiw-track::before { display: none; }
+      .hiw-num-wrap { flex-shrink: 0; margin-bottom: 0; margin-top: 0; }
+      .hiw-step-content { display: flex; flex-direction: column; padding-top: 8px; }
+    }
+
+    /* Footer */
+    footer { background: #f1f5f9; text-align: center; padding: 24px; font-size: 12px; color: var(--text-muted); }
+    footer a { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } .addons-grid { grid-template-columns: repeat(2, 1fr); } .stats-bar-inner { overflow-x: auto; } .stat-item { min-width: 130px; } .price-details-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .price-detail-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding-bottom: 16px; } .price-detail-item:nth-child(2n) { border-bottom: 1px solid rgba(255,255,255,0.09); } .price-detail-item:nth-last-child(-n+2) { border-bottom: none; } }
+    @media (max-width: 600px) { .addons-grid { grid-template-columns: 1fr; } .price-details-grid { grid-template-columns: 1fr; } .price-detail-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.09); padding-bottom: 16px; } .price-detail-item:last-child { border-bottom: none; } }
+    @media (max-width: 600px) {
+      .topbar-inner { padding: 0 20px; } .hero { padding: 60px 20px 52px; }
+      .program-nav { display: none; } .grid { grid-template-columns: 1fr; } .addons-grid { grid-template-columns: 1fr; }
+      main { padding: 40px 20px 60px; } .modal-card { padding: 24px; }
+      .crosssell { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-logo" href="https://www.wisevu.com">
+      <img src="https://www.wisevu.com/wp-content/uploads/2020/10/wisevu-web-design-and-seo-light.svg" alt="Wisevu" />
+    </a>
+    <div class="program-nav">
+      <a href="meta-ads.html" class="active">Meta Ads</a>
+      <a href="organic-social.html">Organic Social</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <canvas id="neural-canvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Meta Ads Management</div>
+    <p class="tier-label">Facebook &amp; Instagram</p>
+    <h1><span class="program-name">Meta Ads</span></h1>
+    <div class="intensity-badge"><span class="intensity-dot"></span>Medical Practice Specialists</div>
+    <p class="hero-desc">Built specifically for medical practices, Wisevu's Meta Ads program combines precision patient targeting with impactful, brand-focused advertising designed to attract and engage the right patients. We build campaigns that resonate with your ideal audience, strengthen your brand, keep your practice top of mind, and turn Meta into a reliable patient acquisition channel.</p>
+    <div class="price-block">
+      <div class="price-block-top">
+        <div class="price-invest-label">Investment</div>
+        <div class="price-amount"><span class="price-currency">$</span>799</div>
+        <div class="price-period">CAD &nbsp;/&nbsp; month &nbsp;/&nbsp; practice</div>
+      </div>
+      <div class="price-block-divider"></div>
+      <div class="price-details-grid">
+        <div class="price-detail-item">
+          <div class="price-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <div class="price-detail-title">$1,500 One-Time Setup</div>
+          <div class="price-detail-note">Complete account, tracking &amp; reporting setup with audience research, campaign strategy, targeting &amp; creative planning.</div>
+        </div>
+        <div class="price-detail-item">
+          <div class="price-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="price-detail-title">Minimum Ad Spend<br><span style="font-weight:800;">$600 CAD / month</span></div>
+          <div class="price-detail-note">Paid directly to Meta — not included in fee</div>
+        </div>
+        <div class="price-detail-item">
+          <div class="price-detail-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="price-detail-title">3-Month Minimum Engagement</div>
+          <div class="price-detail-note">Allows time to optimize, scale and deliver results</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<main>
+  <p class="section-label">What's Included</p>
+  <h2 class="section-title">Monthly Deliverables</h2>
+  <div class="grid">
+
+    <!-- Card 1: Strategy -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card1')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Wisevu&#8482; Meta Ads Campaign Implementation</div>
+      <div class="card-qty">Up to 2 core campaigns</div>
+    </div>
+
+    <!-- Card 2: Ad Creative -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card2')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Advertising Creative Development</div>
+      <div class="card-qty">2–3 ads / campaign</div>
+    </div>
+
+    <!-- Card 3: Audience Targeting -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card3')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Audience Targeting &amp; Segmentation</div>
+      <div class="card-qty">Every campaign</div>
+    </div>
+
+    <!-- Card 4: Campaign Management -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card4')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Campaign Management &amp; Optimization</div>
+      <div class="card-qty">Up to 2 core campaigns</div>
+    </div>
+
+    <!-- Card 5: Compliance -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card5')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Healthcare Advertising Compliance Review</div>
+      <div class="card-qty">Every campaign &amp; creative</div>
+    </div>
+
+    <!-- Card 6: Reporting -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card6')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Advanced Reporting &amp; Strategy Review</div>
+      <div class="card-qty">Monthly</div>
+    </div>
+
+    <!-- Card 7: Account Manager -->
+    <div class="card">
+      <div class="card-top">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+          </svg>
+        </div>
+        <button class="info-btn" onclick="openModal(this,'card7')" aria-label="Learn more">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+      </div>
+      <div class="card-title">Dedicated Account Manager</div>
+      <div class="card-qty">Ongoing</div>
+    </div>
+
+  </div>
+
+  <!-- How It Works -->
+  <div class="hiw-section">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">From Strategy to Patient Acquisition</h2>
+    <p class="hiw-intro">A structured process for developing, launching, and continuously improving your Meta Ads campaigns.</p>
+
+    <div class="hiw-track">
+
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><span class="hiw-num">01</span></div>
+        <div class="hiw-step-content">
+          <div class="hiw-step-title">Strategy &amp; Setup</div>
+          <div class="hiw-step-sub">Build the foundation</div>
+          <div class="hiw-step-desc">We define your campaign objectives, target patient audiences, offers, funnel strategy, tracking, and measurement framework. Every campaign starts with a clear purpose before any advertising begins.</div>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><span class="hiw-num">02</span></div>
+        <div class="hiw-step-content">
+          <div class="hiw-step-title">Creative Development</div>
+          <div class="hiw-step-sub">Create advertising that resonates</div>
+          <div class="hiw-step-desc">Our team develops the concepts, hooks, messaging, copy, and visual creative designed to capture attention, connect with your ideal patients, and strengthen your practice's brand.</div>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><span class="hiw-num">03</span></div>
+        <div class="hiw-step-content">
+          <div class="hiw-step-title">Campaign Launch</div>
+          <div class="hiw-step-sub">Reach the right patients</div>
+          <div class="hiw-step-desc">We build and launch each campaign with treatment-specific targeting, strategic placements, conversion tracking, and structured testing to put your message in front of the prospective patients you want to reach.</div>
+        </div>
+      </div>
+
+      <div class="hiw-step">
+        <div class="hiw-num-wrap"><span class="hiw-num">04</span></div>
+        <div class="hiw-step-content">
+          <div class="hiw-step-title">Optimize &amp; Scale</div>
+          <div class="hiw-step-sub">Turn performance data into better results</div>
+          <div class="hiw-step-desc">Once campaigns are live, we continuously analyze audience, creative, conversion, and cost performance. We refine targeting, test new approaches, reallocate budget, and scale what is working.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hiw-cycle">
+      <div class="hiw-cycle-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6"/><path d="M2.5 12a10 10 0 0 1 17.5-7l1.5 3"/><path d="M2.5 22v-6h6"/><path d="M21.5 12a10 10 0 0 1-17.5 7l-1.5-3"/></svg>
+      </div>
+      <div class="hiw-cycle-text">
+        <div class="hiw-cycle-heading">The process doesn't end at launch.</div>
+        <div class="hiw-cycle-body">Performance insights continuously feed back into targeting, creative, and campaign strategy, allowing your campaigns to become more informed and effective over time.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Optional Add-Ons</p>
+  <h2 class="section-title">Expand Your Program</h2>
+  <div class="addons-grid">
+
+    <div class="addon-card">
+      <div class="card-top">
+        <div class="addon-type">Monthly Add-On</div>
+        <button class="info-btn" onclick="openAddonModal('addon1')" aria-label="More info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </button>
+      </div>
+      <div class="addon-name">Additional Meta Ads Campaign</div>
+      <div class="addon-price">$399 <span style="font-size:14px;font-weight:600;">CAD/month</span></div>
+      <div class="addon-note">Expand into an additional treatment, service, or campaign objective.</div>
+    </div>
+
+    <div class="addon-card">
+      <div class="card-top">
+        <div class="addon-type">Per Production</div>
+        <button class="info-btn" onclick="openAddonModal('addon2')" aria-label="More info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </button>
+      </div>
+      <div class="addon-name">Short-Form Video Ad Creative</div>
+      <div class="addon-price">$450+ <span style="font-size:14px;font-weight:600;">CAD</span></div>
+      <div class="addon-note">Custom short-form video creative developed for Meta advertising.</div>
+    </div>
+
+    <div class="addon-card">
+      <div class="card-top">
+        <div class="addon-type">Per Production</div>
+        <button class="info-btn" onclick="openAddonModal('addon3')" aria-label="More info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </button>
+      </div>
+      <div class="addon-name">Professional Talent</div>
+      <div class="addon-price">$500+ <span style="font-size:14px;font-weight:600;">USD</span></div>
+      <div class="addon-note">Professional on-camera talent or voiceover for video creative.</div>
+    </div>
+
+  </div>
+
+  <!-- Addon Modals -->
+  <div class="modal-overlay" id="addonModal1" onclick="if(event.target===this)closeAddonModal('addon1')">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAddonModal('addon1')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="6" height="18" rx="1"/><rect x="9" y="8" width="6" height="13" rx="1"/><rect x="16" y="13" width="6" height="8" rx="1"/></svg></div>
+      <div class="modal-title">Additional Meta Ads Campaign</div>
+      <div class="modal-qty">$399 CAD/month per additional campaign</div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc">
+        <p>Expand your Meta Ads program beyond the two campaigns included in your base program. Each additional campaign receives the same strategic development and ongoing management as your core campaigns, allowing you to promote another priority treatment, service, offer, or campaign objective.</p>
+        <p>Includes campaign strategy and planning, custom audience targeting, professional ad copy, 2–3 image ad creatives, A/B testing, ongoing optimization, and performance reporting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addonModal2" onclick="if(event.target===this)closeAddonModal('addon2')">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAddonModal('addon2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+      <div class="modal-title">Short-Form Video Ad Creative</div>
+      <div class="modal-qty">Starting at $450 CAD per production</div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc">
+        <p>Go beyond static creative with professionally developed short-form video advertising designed to capture attention, communicate your message quickly, and resonate with your target patient audience.</p>
+        <p>Our team handles the creative process from concept development, hooks and messaging, and professional scriptwriting through branded motion design and final production. Video creative is developed specifically around your campaign, treatment, audience, and brand rather than adapted from generic templates.</p>
+        <p>Typically produced for approximately 30-second Meta placements, including Facebook, Instagram, Stories, and Reels.</p>
+        <p><em>Professional talent, custom filming, and advanced production requirements are additional.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addonModal3" onclick="if(event.target===this)closeAddonModal('addon3')">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAddonModal('addon3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="modal-title">Professional Talent</div>
+      <div class="modal-qty">Starting at $500 USD per production</div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc">
+        <p>Add a professional on-camera spokesperson, actor, or voiceover artist to your video creative when the campaign calls for a human presence or professional narration.</p>
+        <p>Our team handles talent sourcing and coordination to find an appropriate fit for the creative concept, target audience, and brand. Talent fees vary based on the individual, production requirements, usage rights, and length of the creative.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Complete Your Social Presence</p>
+  <h2 class="section-title">Add Organic Social</h2>
+  <div class="crosssell-wrap">
+    <div class="crosssell-header">
+      <div class="crosssell-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="crosssell-label">Exclusive Meta Ads Client Pricing</div>
+        <div class="crosssell-title">Organic Social Media Management</div>
+      </div>
+    </div>
+    <p class="crosssell-intro">Every post is crafted by medical marketing specialists, built around patient psychology, your specialty, and what drives bookings.</p>
+    <div class="crosssell-base">
+      <div class="crosssell-base-left">
+        <div class="crosssell-base-badge">Base Program &nbsp;&middot;&nbsp; 2 Professionally Crafted Social Posts / Month</div>
+        <div class="crosssell-base-includes">Social strategy &amp; content planning &nbsp;&middot;&nbsp; Professional copywriting &amp; design &nbsp;&middot;&nbsp; Healthcare compliance review &nbsp;&middot;&nbsp; AI-assisted community management &nbsp;&middot;&nbsp; Monthly performance reporting &nbsp;&middot;&nbsp; Dedicated account manager</div>
+      </div>
+      <div class="crosssell-base-right">
+        <div class="crosssell-base-price">$499</div>
+        <div class="crosssell-base-sub">CAD / mo &nbsp;&middot;&nbsp; +$350 setup</div>
+        <div class="crosssell-base-sub" style="margin-top: 2px;">Facebook &amp; Instagram included</div>
+        <a href="organic-social.html" class="crosssell-base-btn">Learn More &rarr;</a>
+      </div>
+    </div>
+    <div class="crosssell-expand-label">Expand Your Program</div>
+    <div class="crosssell-modules-row">
+      <div class="crosssell-module">
+        <div class="crosssell-module-label">Add-On</div>
+        <div class="crosssell-module-name">Additional Static Post</div>
+        <div class="crosssell-module-price">+$99 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-desc">Add one more custom-branded static post per month. Same production quality, copywriting, and HIPAA review as your base posts.</div>
+      </div>
+      <div class="crosssell-module">
+        <div class="crosssell-module-label">Add-On</div>
+        <div class="crosssell-module-name">Short-Form Social Video</div>
+        <div class="crosssell-module-price">+$199 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-desc">One short-form video per month (15–45 sec) using AI avatars, AI voiceovers, motion graphics, scripted copy, and branded design. HIPAA-reviewed and optimized for Facebook and Instagram Reels.</div>
+      </div>
+      <div class="crosssell-module">
+        <div class="crosssell-module-label">Add-On</div>
+        <div class="crosssell-module-name">Additional Platform</div>
+        <div class="crosssell-module-price">+$49 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-desc">Extend your existing monthly content to an additional platform such as Google Business Profile, LinkedIn, or TikTok, with platform-appropriate formatting and publishing. Per platform, per month.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <p class="notes-label">Program Notes</p>
+    <p><strong>Setup Fee:</strong> A one-time fee of <strong>$1,500 CAD</strong> covers full account setup, pixel and conversion tracking configuration, UTM and reporting setup, and initial strategy and planning.</p>
+    <p><strong>Ad Spend:</strong> Ad spend is separate from our management fee and is paid directly to Meta by your practice. This keeps your spend fully transparent and in your control. We recommend a minimum of <strong>$600 CAD per month</strong> to generate meaningful data and results.</p>
+    <p><strong>Account Ownership:</strong> All campaigns are built inside your own Meta Business Suite and Ads Manager accounts. You retain full admin access and ownership at all times.</p>
+    <p><strong>Minimum Commitment:</strong> All Meta Ads programs require a <strong>minimum 3-month commitment</strong>, with all fees payable through to the end of the third month. This ensures the necessary resources are allocated for campaign asset development and the effective implementation of all advertising strategies.</p>
+    <p><strong>Cancellation:</strong> A minimum <strong>30-day written notice</strong> is required to cancel the Meta Ads program. This applies after the initial 3-month commitment period has been fulfilled.</p>
+    <p><strong>Pricing:</strong> Pricing is per practice. Multi-location practices are each treated as separate programs unless campaigns are identical across locations — in which case discounts may apply.</p>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Wisevu &nbsp;&middot;&nbsp; <a href="https://www.wisevu.com">wisevu.com</a></p>
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-qty" id="modal-qty"></div>
+    <div class="modal-divider"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+  </div>
+</div>
+
+<script>
+var popupData = {
+  card1: {
+    title: "Wisevu™ Meta Ads Campaign Implementation",
+    qty: "Up to 2 core campaigns",
+    desc: "<p>Each core campaign is strategically developed and implemented around a specific treatment, service, offer, or patient acquisition objective.</p><p>Our team handles the complete campaign build — from campaign structure and objective selection to offer positioning, funnel strategy, audience planning, creative direction, placements, and A/B testing framework. Every campaign is developed around the target patient, competitive landscape, and the specific action we want prospective patients to take.</p><p>For medical practices, effective campaign implementation also requires understanding Meta's restrictions around healthcare advertising and health-related targeting. We account for these requirements from the beginning, building campaigns to maximize the opportunities available while remaining within platform policies.</p><p>Your program includes the strategy, development, and implementation of up to 2 core Meta Ads campaigns.</p>"
+  },
+  card2: {
+    title: "Advertising Creative Development",
+    qty: "2–3 ads / campaign",
+    desc: "<p>Every campaign includes 2–3 professionally developed ad creatives, built around a clear concept and message designed to resonate with your target patient audience. We develop the creative concept, hooks, headlines, copy, and visual direction before bringing each ad to life for Facebook and Instagram.</p><p>Our team handles the full creative process in-house — from concept development and copywriting to design, production, and compliance review. Every ad is tailored to your practice and brand, incorporating your colours, fonts, logos, service visuals, and, where available, authentic clinic photography, patient testimonials, and other practice-specific content.</p><p>Creative is developed specifically for the campaign, audience, treatment, and offer — not simply adapted from generic templates or medical stock imagery. The goal is to create advertising that captures attention, resonates with the right patients, strengthens your brand, and keeps your practice top of mind.</p><p><strong>Formats we produce:</strong> The program includes professionally developed image and carousel ad creatives based on the campaign strategy. Video creative production is available as an optional add-on when video is recommended for the campaign. All included creative comes with up to 2 rounds of revisions before launch.</p><p><em>Video creative production is quoted separately based on production requirements. Professional talent is available as an optional add-on starting at $500 USD.</em></p>"
+  },
+  card3: {
+    title: "Audience Targeting & Segmentation",
+    qty: "Every campaign",
+    desc: "<p>Every campaign starts with a clearly defined ideal patient audience. We research who is most likely to need, value, and take action on the specific treatment or service being promoted, then build a targeting strategy designed to put your practice in front of the right people.</p><p>Our team develops campaign-specific audience segments using the targeting signals and first-party data available and permitted within Meta. Rather than taking a one-size-fits-all approach, targeting is tailored to the treatment, patient profile, market, and campaign objective.</p><p>We strategically build and test audiences across different stages of the patient journey — from reaching new prospective patients to re-engaging people who have already interacted with your practice. Performance data is continuously analyzed to identify which audiences are producing the strongest results, allowing us to refine targeting and allocate ad spend toward the audiences most likely to become qualified leads.</p><p>Healthcare advertising requires additional expertise because Meta restricts the use of certain health-related data and targeting methods. Our team builds audience strategies within these requirements while maximizing the targeting opportunities available to medical advertisers.</p><p><strong>The objective isn't simply greater reach — it's precision: reaching the right prospective patients, with the right message, for the right treatment, at the right time.</strong></p>"
+  },
+  card4: {
+    title: "Campaign Management & Optimization",
+    qty: "Up to 2 core campaigns",
+    desc: "<p>Once your campaigns are live, our team continuously manages and optimizes performance. We monitor budget allocation, audience performance, placements, creative performance, lead costs, conversion performance, and ad fatigue to identify opportunities for improvement.</p><p>As performance data accumulates, we refine targeting, adjust budgets, pause underperforming ads and ad sets, scale what is working, rotate creative, and run structured A/B tests to continually improve campaign performance.</p><p>Optimization isn't based on generating the greatest number of leads at the lowest possible cost. Our focus is on attracting the right prospective patients while continuously improving the efficiency and return of your advertising investment.</p><p>Campaigns are managed directly within your Meta Ads Manager, giving you full visibility into what is running, how much is being spent, and how your campaigns are performing.</p>"
+  },
+  card5: {
+    title: "Healthcare Advertising Compliance Review",
+    qty: "Every campaign &amp; creative",
+    desc: "<p>Every campaign and ad creative is reviewed against Meta's healthcare advertising policies and applicable healthcare advertising requirements before launch. For medical practices, this additional layer of review is essential because healthcare advertising is subject to restrictions around targeting, patient information, medical claims, testimonials, imagery, and how treatments and outcomes are represented.</p><p>Our compliance review considers ad copy and creative, audience strategy, landing page destinations, medical claims, treatment language, testimonials, before-and-after content, and other platform-specific requirements that may apply to healthcare advertisers.</p><p>Our healthcare-focused process is designed to identify potential compliance and platform-policy issues before campaigns go live, reducing unnecessary ad rejections, disruptions, and risk to your advertising account while still allowing us to build compelling campaigns that resonate with prospective patients.</p><p><strong>Compliance is built into our creative and campaign development process — not treated as an afterthought.</strong></p>"
+  },
+  card6: {
+    title: "Advanced Reporting & Strategy Review",
+    qty: "Monthly",
+    desc: "<p>Each month you receive a clear, plain-language performance report covering reach, impressions, link clicks, cost per lead, conversion rate, and return on ad spend where applicable. We set up a reporting dashboard connected directly to your ad account so you can check performance at any time — not just when a report lands in your inbox.</p><p>Our reporting doesn't bury you in vanity metrics or agency jargon. We highlight what drove results, what didn't perform, what we're testing next, and how your campaigns are trending against your patient acquisition goals.</p><p>Your monthly strategy call is where we walk through results together, answer your questions, and align on the next month's plan before anything goes live.</p>"
+  },
+  card7: {
+    title: "Dedicated Account Manager",
+    qty: "Ongoing",
+    desc: "<p>You have a single, dedicated account manager who knows your practice, your specialty, your patient market, and your goals — someone you can reach directly without navigating a support queue or starting from scratch every time you have a question.</p><p>Your account manager oversees your campaigns, coordinates the creative and strategy teams, runs your monthly reporting call, and is your advocate inside Wisevu. They build context about your practice over time — your seasonal patterns, your highest-value services, your local competitive landscape — and that context makes every campaign sharper.</p><p>For medical practices, this continuity matters more than it might seem. Compliance knowledge, specialty understanding, and patient psychology all take time to develop. A dedicated manager means you're not rebuilding that knowledge every time something changes.</p>"
+  }
+};
+
+function openModal(btn, id) {
+  var data = popupData[id];
+  if (!data) return;
+  var card = btn.closest('.card');
+  document.getElementById('modal-icon').innerHTML = card.querySelector('.card-icon').innerHTML;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-qty').textContent = data.qty;
+  document.getElementById('modal-desc').innerHTML = data.desc;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { closeModal(); closeAddonModal('addon1'); closeAddonModal('addon2'); closeAddonModal('addon3'); } });
+
+function openAddonModal(id) {
+  const map = { addon1: 'addonModal1', addon2: 'addonModal2', addon3: 'addonModal3' };
+  document.getElementById(map[id]).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAddonModal(id) {
+  const map = { addon1: 'addonModal1', addon2: 'addonModal2', addon3: 'addonModal3' };
+  document.getElementById(map[id]).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* Neural network canvas — indigo palette */
+(function() {
+  var canvas = document.getElementById('neural-canvas');
+  var ctx = canvas.getContext('2d');
+  function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+  var nodes = [], NODE_COUNT = 72, MAX_DIST = 135;
+  function Node() {
+    this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.22; this.vy = (Math.random() - 0.5) * 0.22;
+    this.r = Math.random() * 1.5 + 0.8; this.alpha = Math.random() * 0.4 + 0.25;
+    this.pulse = Math.random() * Math.PI * 2; this.pulseSpeed = 0.01 + Math.random() * 0.015;
+    this.t = Math.random();
+  }
+  Node.prototype.update = function() {
+    this.x += this.vx; this.y += this.vy; this.pulse += this.pulseSpeed;
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  };
+  Node.prototype.getColor = function(alpha) {
+    var r = Math.round(99 + this.t * (165 - 99));
+    var g = Math.round(102 + this.t * (180 - 102));
+    var b = Math.round(241 + this.t * (252 - 241));
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  };
+  Node.prototype.draw = function() {
+    var pa = this.alpha + Math.sin(this.pulse) * 0.15;
+    var grd = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 5);
+    grd.addColorStop(0, this.getColor(pa * 0.35)); grd.addColorStop(1, this.getColor(0));
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r * 5, 0, Math.PI * 2);
+    ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.getColor(pa); ctx.fill();
+  };
+  function init() { nodes = []; for (var i = 0; i < NODE_COUNT; i++) nodes.push(new Node()); }
+
+  function drawConstellation() {
+    var t = Date.now() / 9000;
+    var cx = canvas.width / 2 + Math.sin(t) * 14;
+    var cy = canvas.height * 0.38 + Math.cos(t * 0.65) * 10;
+    var sc = Math.min(canvas.width * 0.30, canvas.height * 0.56);
+    var S = {
+      alpha: { x: -0.36, y: -0.08, r: 1.3, a: 0.48 },
+      beta:  { x: -0.18, y:  0.12, r: 1.1, a: 0.42 },
+      gamma: { x:  0.00, y: -0.04, r: 1.5, a: 0.52 },
+      delta: { x:  0.18, y:  0.14, r: 1.1, a: 0.42 },
+      epsilon:{ x:  0.36, y: -0.06, r: 1.2, a: 0.44 }
+    };
+    var lines = [['alpha','beta'],['beta','gamma'],['gamma','delta'],['delta','epsilon']];
+    ctx.save();
+    lines.forEach(function(l) {
+      var a = S[l[0]], b = S[l[1]];
+      var ax = cx + a.x * sc, ay = cy + a.y * sc;
+      var bx = cx + b.x * sc, by = cy + b.y * sc;
+      var grad = ctx.createLinearGradient(ax, ay, bx, by);
+      grad.addColorStop(0, 'rgba(99,102,241,' + (a.a * 0.38) + ')');
+      grad.addColorStop(1, 'rgba(165,180,252,' + (b.a * 0.38) + ')');
+      ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+      ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+    });
+    Object.keys(S).forEach(function(k) {
+      var s = S[k];
+      var sx = cx + s.x * sc, sy = cy + s.y * sc;
+      var grd = ctx.createRadialGradient(sx, sy, 0, sx, sy, s.r * 5);
+      grd.addColorStop(0, 'rgba(99,102,241,' + (s.a * 0.35) + ')');
+      grd.addColorStop(1, 'rgba(165,180,252,0)');
+      ctx.beginPath(); ctx.arc(sx, sy, s.r * 5, 0, Math.PI * 2);
+      ctx.fillStyle = grd; ctx.fill();
+      ctx.beginPath(); ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(165,180,252,' + s.a + ')'; ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    var _t = Date.now() / 9000;
+    var ezx = canvas.width / 2 + Math.sin(_t) * 14, ezy = canvas.height * 0.38 + Math.cos(_t * 0.65) * 10;
+    var ezr = Math.min(canvas.width * 0.30, canvas.height * 0.56) * 0.52;
+    function inZone(x, y) { var dx = x - ezx, dy = y - ezy; return dx*dx + dy*dy < ezr*ezr; }
+    for (var i = 0; i < nodes.length; i++) {
+      if (inZone(nodes[i].x, nodes[i].y)) continue;
+      for (var j = i + 1; j < nodes.length; j++) {
+        if (inZone(nodes[j].x, nodes[j].y)) continue;
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MAX_DIST) {
+          var la = (1 - dist / MAX_DIST) * 0.2;
+          var grad = ctx.createLinearGradient(nodes[i].x, nodes[i].y, nodes[j].x, nodes[j].y);
+          grad.addColorStop(0, nodes[i].getColor(la)); grad.addColorStop(1, nodes[j].getColor(la));
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(function(n) { n.update(); if (!inZone(n.x, n.y)) n.draw(); });
+    drawConstellation();
+    requestAnimationFrame(animate);
+  }
+  resize(); init(); animate();
+  window.addEventListener('resize', function() { resize(); init(); });
+})();
+</script>
+</body>
+</html>
