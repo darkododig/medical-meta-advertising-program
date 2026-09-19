@@ -145,13 +145,14 @@
     .crosssell-base-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
     .crosssell-base-btn { display: inline-block; margin-top: 12px; padding: 8px 18px; border-radius: 8px; background: var(--gradient); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; }
     .crosssell-base-btn:hover { opacity: 0.88; }
-    .crosssell-expand-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
-    .crosssell-modules-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .crosssell-module { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
-    .crosssell-module-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
-    .crosssell-module-name { font-size: 13px; font-weight: 700; color: var(--navy); line-height: 1.3; }
-    .crosssell-module-price { font-size: 16px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-top: 2px; }
-    .crosssell-module-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.55; margin-top: 4px; }
+    .crosssell-expand-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+    .crosssell-modules-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .crosssell-module { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px 24px 20px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.18s, border-color 0.18s; }
+    .crosssell-module:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: rgba(99,102,241,0.3); }
+    .crosssell-module-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+    .crosssell-module-name { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+    .crosssell-module-price { font-size: 22px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.02em; }
+    .crosssell-module-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-top: 2px; }
     @media (max-width: 600px) { .crosssell-modules-row { grid-template-columns: 1fr; } .crosssell-base { flex-direction: column; align-items: flex-start; } .crosssell-base-right { text-align: left; } }
 
     /* Notes */
@@ -566,20 +567,20 @@
       <div class="crosssell-module">
         <div class="crosssell-module-label">Add-On</div>
         <div class="crosssell-module-name">Additional Static Post</div>
-        <div class="crosssell-module-price">+$99 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-price">+$99 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
         <div class="crosssell-module-desc">Add one more custom-branded static post per month. Same production quality, copywriting, and HIPAA review as your base posts.</div>
       </div>
       <div class="crosssell-module">
         <div class="crosssell-module-label">Add-On</div>
         <div class="crosssell-module-name">Short-Form Social Video</div>
-        <div class="crosssell-module-price">+$199 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-price">+$199 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
         <div class="crosssell-module-desc">One short-form video per month (15–45 sec) using AI avatars, AI voiceovers, motion graphics, scripted copy, and branded design. HIPAA-reviewed and optimized for Facebook and Instagram Reels.</div>
       </div>
       <div class="crosssell-module">
         <div class="crosssell-module-label">Add-On</div>
         <div class="crosssell-module-name">Additional Platform</div>
-        <div class="crosssell-module-price">+$49 <span style="font-size:12px;font-weight:600;">CAD/mo</span></div>
-        <div class="crosssell-module-desc">Extend your existing monthly content to an additional platform such as Google Business Profile, LinkedIn, or TikTok, with platform-appropriate formatting and publishing. Per platform, per month.</div>
+        <div class="crosssell-module-price">+$49 <span style="font-size:14px;font-weight:600;">CAD/mo</span></div>
+        <div class="crosssell-module-desc">Extend your existing monthly content to an additional platform such as LinkedIn, TikTok, Pinterest, YouTube, or Google Business Profile, with platform-appropriate formatting and publishing. Per platform, per month.</div>
       </div>
     </div>
   </div>
