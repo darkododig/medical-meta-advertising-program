@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meta Ads Management — Medical Practice Marketing | Wisevu</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -39,6 +40,27 @@
     .intensity-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.11); border-radius: 100px; padding: 5px 14px 5px 10px; margin-bottom: 28px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.38); letter-spacing: 0.08em; text-transform: uppercase; }
     .intensity-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee7b7; flex-shrink: 0; box-shadow: 0 0 6px rgba(110,231,183,0.5); }
     .hero-desc { max-width: 580px; margin: 0 auto 44px; font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.62); font-weight: 400; }
+    /* Hero brand badge */
+    .hero-brand-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(5,10,38,0.75); border: 1.5px solid rgba(59,130,246,0.8); box-shadow: 0 0 12px rgba(59,130,246,0.25), inset 0 0 8px rgba(59,130,246,0.08); color: rgba(255,255,255,0.92); font-size: 13px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; padding: 9px 24px; border-radius: 100px; margin-bottom: 16px; }
+    .hero-brand-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.9); border-radius: 50%; flex-shrink: 0; }
+    /* Floating cards */
+    .hero-heading-wrap { position: relative; max-width: 800px; width: 100%; display: flex; flex-direction: column; align-items: center; overflow: visible; }
+    .hf-col { position: absolute; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; z-index: 3; pointer-events: none; opacity: 0.55; }
+    .hf-left { left: -190px; align-items: flex-start; }
+    .hf-right { right: -190px; align-items: flex-end; }
+    .hfc { background: rgba(6,12,40,0.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; }
+    .hfc-logo { width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; }
+    .hfc-meta  { transform: rotate(-9deg); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-insta { transform: rotate(9deg);  box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .hfc-results { padding: 14px 44px 14px 16px; position: relative; min-width: 158px; transform: rotate(-5deg); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+    .hfc-results-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); line-height: 1.9; }
+    .hfc-results-arrow { position: absolute; top: 12px; right: 12px; color: #6ee7b7; font-size: 15px; font-weight: 900; }
+    .hfc-chart { padding: 16px 18px 14px; min-width: 170px; transform: rotate(5deg); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+    .hfc-chart-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.82); line-height: 1.5; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .hfc-chart-arrow { color: #6ee7b7; font-size: 14px; font-weight: 900; }
+    .hfc-bars { display: flex; align-items: flex-end; gap: 6px; height: 52px; }
+    .hfc-bar { border-radius: 4px 4px 0 0; }
+    @media (max-width: 1200px) { .hf-col { display: none; } }
     .price-block { width: 100%; max-width: 820px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11); border-radius: 20px; padding: 28px 36px 32px; backdrop-filter: blur(12px); }
     .price-block-top { display: flex; flex-direction: column; align-items: center; margin-bottom: 24px; }
     .price-invest-label { font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
@@ -228,11 +250,49 @@
 
 <section class="hero">
   <canvas id="neural-canvas"></canvas>
+
   <div class="hero-inner">
-    <div class="hero-eyebrow">Meta Ads Management</div>
-    <p class="tier-label">Facebook &amp; Instagram</p>
-    <h1><span class="program-name">Meta Ads</span></h1>
-    <div class="intensity-badge"><span class="intensity-dot"></span>Medical Practice Specialists</div>
+    <div class="hero-heading-wrap">
+
+      <!-- Floating card — left -->
+      <div class="hf-col hf-left">
+        <div class="hfc hfc-logo hfc-meta" style="background:radial-gradient(ellipse at 40% 60%, rgba(24,119,242,0.18) 0%, rgba(6,12,40,0.95) 70%);">
+          <i class="fa-brands fa-meta" style="font-size:42px; color:#1877F2;"></i>
+        </div>
+        <div class="hfc hfc-results">
+          <div class="hfc-results-text">More Patients<br>Stronger Brand<br>Real Results</div>
+          <div class="hfc-results-arrow">↗</div>
+        </div>
+      </div>
+
+      <!-- Floating card — right -->
+      <div class="hf-col hf-right">
+        <div class="hfc hfc-logo hfc-insta" style="background: radial-gradient(ellipse at 40% 60%, rgba(24,119,242,0.18) 0%, rgba(6,12,40,0.95) 70%);">
+          <i class="fa-brands fa-instagram" style="font-size:46px; background: radial-gradient(ellipse at 35% 110%, #ffd600 0%, #ff6b35 30%, #e1306c 60%, #c13584 80%, #7b2ff7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+        </div>
+        <div class="hfc hfc-chart">
+          <div class="hfc-chart-label">
+            <span>Grow Your<br>Patient Base</span>
+            <span class="hfc-chart-arrow">↗</span>
+          </div>
+          <div class="hfc-bars">
+            <div class="hfc-bar" style="width:18px;height:18px;background:rgba(99,102,241,0.35);"></div>
+            <div class="hfc-bar" style="width:18px;height:26px;background:rgba(99,102,241,0.48);"></div>
+            <div class="hfc-bar" style="width:18px;height:34px;background:rgba(99,102,241,0.62);"></div>
+            <div class="hfc-bar" style="width:18px;height:42px;background:rgba(99,102,241,0.78);"></div>
+            <div class="hfc-bar" style="width:18px;height:52px;background:linear-gradient(180deg,#818cf8,#4f46e5);"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centered heading content -->
+      <div class="hero-brand-badge"><span class="hero-brand-dot"></span>Wisevu™ Meta Ads</div>
+      <p class="tier-label">Patient Acquisition &nbsp;·&nbsp; Facebook &amp; Instagram</p>
+      <h1>Meta Ads for<br><span class="program-name">Medical Practices</span></h1>
+      <div class="intensity-badge"><span class="intensity-dot"></span>Medical Marketing Specialists</div>
+
+    </div><!-- /hero-heading-wrap -->
+
     <p class="hero-desc">Built specifically for medical practices, Wisevu's Meta Ads program combines precision patient targeting with impactful, brand-focused advertising designed to attract and engage the right patients. We build campaigns that resonate with your ideal audience, strengthen your brand, keep your practice top of mind, and turn Meta into a reliable patient acquisition channel.</p>
     <div class="price-block">
       <div class="price-block-top">
